@@ -36,16 +36,16 @@ const Reports = () => {
   };
 
   const handleExport = () => {
-    const headers = ['Vaccine ID', 'Commercial Name', 'Generic Name', 'Lot Number', 'Expiration Date', 'Quantity On Hand'];
+const headers = ['Vaccine ID', 'Commercial Name', 'Generic Name', 'Lot Number', 'Expiration Date', 'Quantity On Hand'];
     const csvContent = [
       headers.join(','),
       ...vaccines.map(vaccine => [
-        vaccine.vaccineId,
-        vaccine.commercialName,
-        vaccine.genericName,
-        vaccine.lotNumber,
-        vaccine.expirationDate,
-        vaccine.quantityOnHand
+        vaccine.vaccine_id,
+        vaccine.commercial_name,
+        vaccine.generic_name,
+        vaccine.lot_number,
+        vaccine.expiration_date,
+        vaccine.quantity_on_hand
       ].join(','))
     ].join('\n');
 
@@ -64,17 +64,17 @@ const Reports = () => {
     const today = new Date();
     
     switch (reportType) {
-      case 'expired':
-        return vaccines.filter(vaccine => new Date(vaccine.expirationDate) <= today);
+case 'expired':
+        return vaccines.filter(vaccine => new Date(vaccine.expiration_date) <= today);
       case 'expiring':
         const thirtyDaysFromNow = new Date(today);
         thirtyDaysFromNow.setDate(today.getDate() + 30);
         return vaccines.filter(vaccine => {
-          const expDate = new Date(vaccine.expirationDate);
+          const expDate = new Date(vaccine.expiration_date);
           return expDate > today && expDate <= thirtyDaysFromNow;
         });
       case 'lowStock':
-        return vaccines.filter(vaccine => vaccine.quantityOnHand > 0 && vaccine.quantityOnHand <= 5);
+        return vaccines.filter(vaccine => vaccine.quantity_on_hand > 0 && vaccine.quantity_on_hand <= 5);
       default:
         return vaccines;
     }
@@ -186,23 +186,23 @@ const Reports = () => {
               <tbody>
                 {filteredVaccines.map((vaccine) => (
                   <tr key={vaccine.Id} className="hover:bg-gray-50">
-                    <td className="border border-gray-200 px-4 py-3 text-sm text-gray-900">
-                      {vaccine.vaccineId}
+<td className="border border-gray-200 px-4 py-3 text-sm text-gray-900">
+                      {vaccine.vaccine_id}
                     </td>
                     <td className="border border-gray-200 px-4 py-3 text-sm text-gray-900">
-                      {vaccine.commercialName}
+                      {vaccine.commercial_name}
                     </td>
                     <td className="border border-gray-200 px-4 py-3 text-sm text-gray-900">
-                      {vaccine.genericName}
+                      {vaccine.generic_name}
                     </td>
                     <td className="border border-gray-200 px-4 py-3 text-sm text-gray-900">
-                      {vaccine.lotNumber}
+                      {vaccine.lot_number}
                     </td>
                     <td className="border border-gray-200 px-4 py-3 text-sm text-gray-900">
-                      {format(new Date(vaccine.expirationDate), 'MM/dd/yyyy')}
+                      {format(new Date(vaccine.expiration_date), 'MM/dd/yyyy')}
                     </td>
                     <td className="border border-gray-200 px-4 py-3 text-sm text-gray-900 font-medium">
-                      {vaccine.quantityOnHand}
+                      {vaccine.quantity_on_hand}
                     </td>
                   </tr>
                 ))}

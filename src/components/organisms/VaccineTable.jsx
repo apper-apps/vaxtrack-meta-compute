@@ -35,10 +35,10 @@ const VaccineTable = ({
     }));
   };
 
-  const handleAdminister = (vaccine) => {
+const handleAdminister = (vaccine) => {
     const doses = parseInt(administeredDoses[vaccine.Id] || 0);
     if (doses > 0) {
-      if (doses > vaccine.quantityOnHand) {
+      if (doses > vaccine.quantity_on_hand) {
         toast.error('Cannot administer more doses than available');
         return;
       }
@@ -50,14 +50,14 @@ const VaccineTable = ({
     }
   };
 
-  const sortedAndFilteredVaccines = useMemo(() => {
+const sortedAndFilteredVaccines = useMemo(() => {
     let filtered = vaccines.filter(vaccine => {
       const searchLower = searchTerm.toLowerCase();
       return (
-        vaccine.commercialName.toLowerCase().includes(searchLower) ||
-        vaccine.genericName.toLowerCase().includes(searchLower) ||
-        vaccine.lotNumber.toLowerCase().includes(searchLower) ||
-        vaccine.vaccineId.toLowerCase().includes(searchLower)
+        vaccine.commercial_name?.toLowerCase().includes(searchLower) ||
+        vaccine.generic_name?.toLowerCase().includes(searchLower) ||
+        vaccine.lot_number?.toLowerCase().includes(searchLower) ||
+        vaccine.vaccine_id?.toLowerCase().includes(searchLower)
       );
     });
 
@@ -65,7 +65,7 @@ const VaccineTable = ({
       let aValue = a[sortField];
       let bValue = b[sortField];
 
-      if (sortField === 'expirationDate') {
+      if (sortField === 'expiration_date') {
         aValue = new Date(aValue);
         bValue = new Date(bValue);
       }
@@ -75,17 +75,16 @@ const VaccineTable = ({
       return 0;
     });
   }, [vaccines, sortField, sortDirection, searchTerm]);
-
-  const getRowClassName = (vaccine) => {
+const getRowClassName = (vaccine) => {
     const today = new Date();
-    const expDate = new Date(vaccine.expirationDate);
+    const expDate = new Date(vaccine.expiration_date);
     const daysUntilExpiry = differenceInDays(expDate, today);
 
     if (daysUntilExpiry < 0) {
       return 'table-row-expired';
     } else if (daysUntilExpiry <= 30) {
       return 'table-row-expiring';
-    } else if (vaccine.quantityOnHand <= 5 && vaccine.quantityOnHand > 0) {
+    } else if (vaccine.quantity_on_hand <= 5 && vaccine.quantity_on_hand > 0) {
       return 'table-row-low-stock';
     }
     return 'hover:bg-gray-50';
@@ -119,57 +118,57 @@ const VaccineTable = ({
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <button
-                  onClick={() => handleSort('vaccineId')}
+<button
+                  onClick={() => handleSort('vaccine_id')}
                   className="flex items-center gap-1 hover:text-gray-700"
                 >
                   Vaccine ID
-                  <ApperIcon name={getSortIcon('vaccineId')} size={14} />
+                  <ApperIcon name={getSortIcon('vaccine_id')} size={14} />
                 </button>
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <button
-                  onClick={() => handleSort('commercialName')}
+<button
+                  onClick={() => handleSort('commercial_name')}
                   className="flex items-center gap-1 hover:text-gray-700"
                 >
                   Commercial Name
-                  <ApperIcon name={getSortIcon('commercialName')} size={14} />
+                  <ApperIcon name={getSortIcon('commercial_name')} size={14} />
                 </button>
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <button
-                  onClick={() => handleSort('genericName')}
+<button
+                  onClick={() => handleSort('generic_name')}
                   className="flex items-center gap-1 hover:text-gray-700"
                 >
                   Generic Name
-                  <ApperIcon name={getSortIcon('genericName')} size={14} />
+                  <ApperIcon name={getSortIcon('generic_name')} size={14} />
                 </button>
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <button
-                  onClick={() => handleSort('lotNumber')}
+<button
+                  onClick={() => handleSort('lot_number')}
                   className="flex items-center gap-1 hover:text-gray-700"
                 >
                   Lot Number
-                  <ApperIcon name={getSortIcon('lotNumber')} size={14} />
+                  <ApperIcon name={getSortIcon('lot_number')} size={14} />
                 </button>
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <button
-                  onClick={() => handleSort('expirationDate')}
+<button
+                  onClick={() => handleSort('expiration_date')}
                   className="flex items-center gap-1 hover:text-gray-700"
                 >
                   Expiration Date
-                  <ApperIcon name={getSortIcon('expirationDate')} size={14} />
+                  <ApperIcon name={getSortIcon('expiration_date')} size={14} />
                 </button>
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <button
-                  onClick={() => handleSort('quantityOnHand')}
+<button
+                  onClick={() => handleSort('quantity_on_hand')}
                   className="flex items-center gap-1 hover:text-gray-700"
                 >
                   Quantity on Hand
-                  <ApperIcon name={getSortIcon('quantityOnHand')} size={14} />
+                  <ApperIcon name={getSortIcon('quantity_on_hand')} size={14} />
                 </button>
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -191,41 +190,41 @@ const VaccineTable = ({
                   transition={{ duration: 0.2 }}
                   className={`transition-colors duration-200 ${getRowClassName(vaccine)}`}
                 >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {vaccine.vaccineId}
+<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {vaccine.vaccine_id}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {vaccine.commercialName}
+                    {vaccine.commercial_name}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {vaccine.genericName}
+                    {vaccine.generic_name}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {vaccine.lotNumber}
+                    {vaccine.lot_number}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {format(new Date(vaccine.expirationDate), 'MM/dd/yyyy')}
+                    {format(new Date(vaccine.expiration_date), 'MM/dd/yyyy')}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <span className="font-medium">{vaccine.quantityOnHand}</span>
+                    <span className="font-medium">{vaccine.quantity_on_hand}</span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     <div className="flex items-center gap-2">
                       <Input
                         type="number"
                         min="0"
-                        max={vaccine.quantityOnHand}
+                        max={vaccine.quantity_on_hand}
                         value={administeredDoses[vaccine.Id] || ''}
                         onChange={(e) => handleAdministeredChange(vaccine.Id, e.target.value)}
                         className="w-20"
                         size="small"
-                        disabled={vaccine.quantityOnHand === 0}
+                        disabled={vaccine.quantity_on_hand === 0}
                       />
                       <Button
                         size="small"
                         variant="primary"
                         onClick={() => handleAdminister(vaccine)}
-                        disabled={!administeredDoses[vaccine.Id] || vaccine.quantityOnHand === 0}
+                        disabled={!administeredDoses[vaccine.Id] || vaccine.quantity_on_hand === 0}
                       >
                         Give
                       </Button>
@@ -233,8 +232,8 @@ const VaccineTable = ({
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     <VaccineStatusBadge
-                      expirationDate={vaccine.expirationDate}
-                      quantityOnHand={vaccine.quantityOnHand}
+                      expirationDate={vaccine.expiration_date}
+                      quantityOnHand={vaccine.quantity_on_hand}
                     />
                   </td>
                 </motion.tr>

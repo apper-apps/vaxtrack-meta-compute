@@ -29,24 +29,25 @@ const Administration = () => {
     }
   };
 
-  const handleAdminister = async (vaccine, doses) => {
+const handleAdminister = async (vaccine, doses) => {
     try {
-      const newQuantity = vaccine.quantityOnHand - doses;
+      const newQuantity = vaccine.quantity_on_hand - doses;
       
       // Update vaccine quantity
-      await vaccineService.updateQuantityOnHand(vaccine.Id, newQuantity);
+      await vaccineService.update(vaccine.Id, { quantity_on_hand: newQuantity });
       
       // Record administration
-      await administrationService.recordAdministration(
-        vaccine.vaccineId,
-        vaccine.lotNumber,
-        doses
-      );
+      await administrationService.create({
+        vaccine_id: vaccine.vaccine_id,
+        lot_number: vaccine.lot_number,
+        doses_administered: doses,
+        administration_date: new Date().toISOString().split('T')[0]
+      });
 
       // Reload data
       await loadVaccines();
       
-      toast.success(`Successfully administered ${doses} dose(s) of ${vaccine.commercialName}`);
+      toast.success(`Successfully administered ${doses} dose(s) of ${vaccine.commercial_name}`);
     } catch (err) {
       toast.error('Failed to record administration');
     }
