@@ -1,0 +1,32 @@
+[
+  {
+    "Id": 1,
+    "vaccineId": "PSWH01",
+    "receivedDate": "2024-01-15",
+    "quantitySent": 1,
+    "quantityReceived": 1,
+    "dosesPassedInspection": 1,
+    "dosesFailedInspection": 0,
+    "discrepancyReason": ""
+  },
+  {
+    "Id": 2,
+    "vaccineId": "PSWH02",
+    "receivedDate": "2024-01-20",
+    "quantitySent": 20,
+    "quantityReceived": 18,
+    "dosesPassedInspection": 18,
+    "dosesFailedInspection": 0,
+    "discrepancyReason": "2 doses missing from shipment"
+  },
+  {
+    "Id": 3,
+    "vaccineId": "PSWH03",
+    "receivedDate": "2024-02-01",
+    "quantitySent": 5,
+    "quantityReceived": 5,
+    "dosesPassedInspection": 5,
+    "dosesFailedInspection": 0,
+    "discrepancyReason": ""
+  }
+]

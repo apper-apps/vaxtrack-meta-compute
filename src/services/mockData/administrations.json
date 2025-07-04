@@ -1,0 +1,23 @@
+[
+  {
+    "Id": 1,
+    "vaccineId": "PSWH01",
+    "lotNumber": "3CA03C3",
+    "dosesAdministered": 0,
+    "administrationDate": "2024-12-15"
+  },
+  {
+    "Id": 2,
+    "vaccineId": "PSWH02",
+    "lotNumber": "U7908AA",
+    "dosesAdministered": 0,
+    "administrationDate": "2024-12-15"
+  },
+  {
+    "Id": 3,
+    "vaccineId": "PSWH03",
+    "lotNumber": "W1C741M",
+    "dosesAdministered": 0,
+    "administrationDate": "2024-12-15"
+  }
+]
